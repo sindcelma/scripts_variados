@@ -16,14 +16,14 @@ except mariadb.Error as e:
     sys.exit(1)
 
 cursor = conn.cursor()
-cursor.execute("SELECT nome, sobrenome, email FROM mailing WHERE ativo = 1")
+cursor.execute("SELECT hash_id, nome, sobrenome, email FROM mailing WHERE ativo = 1")
 
 res = cursor.fetchall()
 
-header = ["Nome", "Sobrenome", "Email"]
+header = ["hash", "Nome", "Sobrenome", "Email"]
 
 f = open("backup_mailing.csv", "w")
-f.write(header[0]+";"+header[1]+";"+header[2]+";\n")
+f.write(header[0]+";"+header[1]+";"+header[2]+";"+header[3]+";\n")
 
 for row in res:
     strg = ""
