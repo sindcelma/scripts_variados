@@ -1,3 +1,4 @@
 backup_mailing.csv
+backup_mailing*.csv
 emails.txt
 config.json
