@@ -17,21 +17,20 @@ except mariadb.Error as e:
     sys.exit(1)
 
 cursor = conn.cursor()
-cursor.execute("SELECT nome, sobrenome, email, ativo FROM mailing WHERE ativo = 1")
+cursor.execute("SELECT hash_id as `hash`, nome, sobrenome, email FROM mailing WHERE loc_id IS null")
 
 res = cursor.fetchall()
 
-header = ["Nome", "Sobrenome", "Email", "status"]
+header = ["hash", "Nome", "Sobrenome", "Email"]
 status = ["descadastrado", "ativo", "desativado"]
 
 data_e_hora_atuais = datetime.now()
 data_e_hora_em_texto = data_e_hora_atuais.strftime('%d_%m_%Y___%H_%M')
-f = open("backup_mailing_ativos_"+data_e_hora_em_texto+".csv", "w")
+f = open("backup_mailing_novos_ativos_"+data_e_hora_em_texto+".csv", "w")
 f.write(header[0]+";"+header[1]+";"+header[2]+";"+header[3]+";\n")
 
 for row in res:
-    st = status[row[3]]
-    f.write(row[0]+";"+row[1]+";"+row[2]+";"+st+";\n")
+    f.write(row[0]+";"+row[1]+";"+row[2]+";"+row[3]+";\n")
 
 f.close()
 

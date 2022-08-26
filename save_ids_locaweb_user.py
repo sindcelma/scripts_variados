@@ -16,20 +16,26 @@ headers = {
 }
 
 
-conn = Connect().get()
-cursor = conn.cursor()
+
+itens  = []
 
 while currentPage <= totalPages:
     response = requests.get(url+"?page="+str(currentPage), headers=headers)
     time.sleep(2)
     currentPage += 1
-    items = json.loads(response.text)['items']
-    for item in items:
-        print(item)
-        try:
-            cursor.execute("UPDATE mailing SET loc_id = %s WHERE email LIKE %s", (str(item['id']), str(item['email'])))
-        except:
-            print("Erro ao tentar editar contar.")
+    for it in json.loads(response.text)['items']:
+        print(it)
+        itens.append(it)
 
-conn.commit()
-conn.close()
+try:
+    conn   = Connect().get()
+    cursor = conn.cursor()
+    for item in itens:
+        cursor.execute("UPDATE mailing SET loc_id = %s WHERE email LIKE %s", (str(item['id']), str(item['email'])))
+    conn.commit()
+    conn.close()
+except:
+    print("Erro ao tentar editar contar.")
+
+
+print("Script Finalizado.")
