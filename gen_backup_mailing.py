@@ -17,7 +17,7 @@ except mariadb.Error as e:
     sys.exit(1)
 
 cursor = conn.cursor()
-cursor.execute("SELECT hash_id as `hash`, nome, sobrenome, email FROM mailing WHERE loc_id IS null")
+cursor.execute("SELECT hash_id as `hash`, nome, sobrenome, email FROM mailing WHERE ativo = 1")
 
 res = cursor.fetchall()
 
