@@ -3,7 +3,7 @@ import sys
 from Config import Config 
 
 try:
-    config = Config().vars
+    config = Config(True).vars
     conn = mariadb.connect(
         user=config['user'],
         password=config['password'],
@@ -22,7 +22,7 @@ res = cursor.fetchall()
 
 header = ["hash", "Nome", "Sobrenome", "Email"]
 
-f = open("backup_mailing_2.csv", "w")
+f = open("backup_mailing_jan_2023_2.csv", "w")
 f.write(header[0]+";"+header[1]+";"+header[2]+";"+header[3]+";\n")
 
 for row in res:
